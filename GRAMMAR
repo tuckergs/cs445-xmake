@@ -1,0 +1,35 @@
+document: '<' document2
+
+document2: '?' XML attributes '?' '>' root
+  | root2
+
+root: '<' root2
+
+root2: begintag2 childswithend
+
+begintag: '<' begintag2
+
+begintag2: ID attributes '>'
+
+endtag: '<' endtag2
+
+endtag2: '/' ID '>'
+
+attributes: ID attribute2 attributes
+  | /* empty */
+
+attribute2: '=' '\"' ATTRSTR '\"'
+
+childswithend: '<' childswithend2
+  | TEXTSTR childswithend
+
+childswithend2: ID tagelement3 childswithend
+  | endtag2
+
+tagelement3: attributes tagelement4
+
+tagelement4: '/' '>'
+  | '>' childswithend
+
+
+
