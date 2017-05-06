@@ -2,23 +2,139 @@
 #include <stdlib.h>
 #include <assert.h>
 
+//peek(): check next token without match it
 
-void match(int type){
-  assert( peek(PRESERVE_TEXT) == type );
+void match(int token){
+  assert( peek() == token );
 }
 
+
+
+//document: '<' document2
 void document(){
-  match('<');
+  //TODO fix
+  match('<');// less than should be toekn
   document2();
 }
 
+
+
+/*
+   document2: '?' XML attributes '?' '>' root
+   | root2
+*/
 void document2(){
-  match('?');
-  match('x');
-  match('m');
-  match('l');
+  if(peek()=='?'){
+    match('?');
+    match('x');
+    match('m');
+    match('l');
+    attributes();
+    match('?');
+    match('>');
+    root();
+  }else{
+    root2();
+  }
+}
+
+
+
+/* attributes: ID attribute2 attributes
+   | /* empty */
+void attributes(){
+  if(peek()==ID){
+    match(ID);
+    attribute2();
+    attributes();
+  }
+}
+
+
+//attribute2: '=' '\"' ATTRSTR '\"'
+void attribute2(){
+  match('=');
+  match('\"');
+  match(ATTRSTR);
+  match('\"');
+}
+
+
+//root: '<' root2
+void root(){
+  match('<');
+  root2();
+}
+
+
+//root2: begintag2 childswithend
+void root2(){
+  begintag2();
+  childswithend();
+}
+
+
+//begintag2: ID attributes '>'
+void begintag2(){
+  match(ID);
   attributes();
-  match('?');
   match('>');
-  root();
+}
+
+
+
+//childswithend: '<' childswithend2
+//  | TEXTSTR childswithend
+void childswithend(){
+  if(peek()=='<'){
+    match('<');
+    childswithend2();
+  }else{
+    match(TEXTSTR);
+    childswithend();
+  }
+}
+
+
+
+//childswithend2: ID tagelement3 childswithend
+//  | endtag2
+void childswithend2(){
+  if(peek()==ID){
+    match(ID);
+    tagelement3();
+    childswithend();
+  }else{
+    endtag2();
+  }
+}
+
+
+//endtag2: '/' ID '>'
+void endtag2(){
+  match('/');
+  match(ID);
+  match('>');
+}
+
+
+
+//tagelement3: attributes tagelement4
+void tagelement3(){
+  attributes();
+  tagelement4();
+}
+
+
+
+//tagelement4: '/' '>'
+//  | '>' childswithend
+void tagelement4(){
+  if(peek()=='/'){
+    match('/');
+    match('>');
+  }else{
+    match('>');
+    childswithend();
+  }
 }
