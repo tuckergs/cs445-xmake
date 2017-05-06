@@ -1,0 +1,166 @@
+
+
+Valid := '\t' | '\n' | '\r' | [0x20-0x7E]
+NameStartChar := ':' | '_' | [a-z] | [A-Z]
+NameChar := NameStartChar | '-' | '.' | [0-9]
+Whitespace := ' ' | '\t' | '\n' | '\r'
+
+--DFA--
+
+state NRM:
+
+	NameStartChar -> 
+		{
+			Set curtext to the char
+			Advance input
+			goto state EXPID
+		}
+	'\"' | '\'' ->
+		{
+			Set curtext to ""
+			Set quoteused to character
+			goto state EXPATTR & return character
+			Also, advance input
+		}
+	' ' | '\t' | '\n' | '\r' -> 
+		{
+			advance input
+		}
+	else ->
+		{
+			return character and advance input
+		}
+		
+state EXPID:
+
+	NameChar ->
+		{
+			Add char to curtext
+			Advance character
+		}
+		
+	else ->
+		{
+			Put back character
+			return ID and goto NRM
+		}
+		
+state EXPATTR:
+
+	[^&<] - quoteused ->
+		{
+			Concatenate character to curtext
+			Advance input
+		}
+		
+	'<' -> goto ERR
+	
+	'&' -> 
+		{
+			Advance input
+			goto EXPENT
+		}
+	
+	quoteused ->
+		{
+			return ATTRSTR and goto NRM
+		}
+		
+state EXPENT:
+
+	NameStartChar:
+		{
+			set curentitytext to character
+			Advance input
+			goto EXPENT2
+		}
+		
+	'#' ->
+		{
+			Advance input
+			goto EXPCENT
+		}
+		
+	else -> goto ERR
+	
+state EXPENT2:
+
+	NameChar ->
+		{
+			append character to curentitytext
+			Advance input
+		}
+		
+	';' ->
+		{
+			find character referenced by curentitytext
+			append that character to curtext
+			Advance input
+			goto EXPATTR
+		}
+		
+	else -> goto ERR
+	
+state EXPCENT:
+
+	[0-9] ->
+		{
+			set curentityint to atoi(character)
+			Advance input
+			goto EXPCENT2
+		}
+		
+	'x' ->
+		{
+			Advance input
+			goto EXPCXENT
+		}
+		
+	else -> goto ERR
+	
+state EXPCENT2:
+
+	[0-9] ->
+		{
+			set curentityint to 10*curentityint + atoi(character)
+			Advance input
+		}
+		
+	';' ->
+		{
+			find character referenced by curentityint
+			append that character to curtext
+			Advance input
+			goto EXPATTR
+		}
+		
+	else -> goto ERR
+	
+state EXPCXENT:
+
+	[0-9a-fA-F] ->
+		{
+			set curentityint to atoi(character,16)
+			Advance input
+			goto EXPCXENT2
+		}
+		
+	else -> goto ERR
+	
+state EXPCXENT2:
+
+	[0-9a-fA-F] ->
+		{
+			set curentityint to 16*curentityint + atoi(character,16)
+			Advance input
+		}
+		
+	';' ->
+		{
+			find character referenced by curentityint
+			append that character to curtext
+			Advance input
+			goto EXPATTR
+		}
+		
+	else -> goto ERR
