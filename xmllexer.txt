@@ -63,6 +63,7 @@ state EXPATTR:
 	
 	quoteused ->
 		{
+      Put back quote
 			return ATTRSTR and goto NRM
 		}
 		

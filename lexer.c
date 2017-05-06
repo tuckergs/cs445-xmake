@@ -94,6 +94,8 @@ int _next_token()
       {
         quoteused = c;
         curtext = Str_clear();
+        curstate = EXPATTR;
+        return c;
       }
       else if(isSpace(c) || isWhitespace(c))
       {
@@ -115,6 +117,32 @@ int _next_token()
         return ID;
       }
       break;
+    case EXPATTR:
+      myassert(c != '<',"\'<\' can't be used in quotes! Escape it using &lt;");
+      if(c == quoteused)
+      {
+        ungetc(stdin,c);
+        curstate = NRM;
+        return ATTRSTR;
+      }
+      if(c == '&')
+      {
+        curstate = EXPENT;
+      }
+      else
+      {
+        curtext = append(curtext,c);
+      }
+      break;
+    case EXPENT:
+      if(isNameStartChar(c))
+      {
+      }
+      else if(c == '#')
+      {
+      }
+      else{
+      }
 //TODO: More schtuff
   }
 }
