@@ -77,7 +77,7 @@ int _next_token()
 //beginning
   while(1)
   {
-    c = getc(stdin);
+    c = getc(stdin);//advanced input
     myassert(isValid(c),"You broke it! Invalid character!\n");
 
     switch(curstate)
@@ -94,9 +94,12 @@ int _next_token()
       {
         quoteused = c;
         curtext = Str_clear();
+        curstate = EXPATTR;
+        return c;
       }
-      else if(isSpace(c) || isWhitespace(c))
+      else if(isSpace(c) || isWhitespace(c) || isEnter(c))
       {
+        //advanced input
       }
       else
       {
@@ -115,6 +118,7 @@ int _next_token()
         return ID;
       }
       break;
+
 //TODO: More schtuff
   }
 }
