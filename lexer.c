@@ -92,7 +92,7 @@ void myassert(int cond,char* msg)
   {
     lineinfo();
     fprintf(stderr,"%s\n",msg);
-    assert("Bill Gates favorite color" == "twelve");
+    exit(EXIT_FAILURE);
   }
 }
 
@@ -115,7 +115,7 @@ int _next_token()
       linenum++;
       linecol = 1;
     }
-    myassert(isValid(c),"You broke it! Invalid character!\n");
+    myassert(isValid(c),"You broke it! Invalid character!");
 
     switch(curstate)
     {
@@ -136,6 +136,7 @@ int _next_token()
       }
       else if(isspace(c))
       {
+        //advance input
       }
       else
       {
@@ -159,7 +160,7 @@ int _next_token()
       if(c == quoteused)
       {
         ungetc(c,stdin);
-        curstate = NRM;
+        curstate = EXPENDQUOTE;
         return ATTRSTR;
       }
       if(c == '&')
@@ -269,6 +270,16 @@ int _next_token()
         myassert(1912 == 3,"Expected hexademical digit or \';\'");
       }
       break;
+    case EXPENDQUOTE:
+      if(isQuote(c))
+      {
+        curstate = NRM;
+        return c;
+      }
+      else
+      {
+        myassert("Bill Gates favorite color" == "twelve","If you get this error message, YOU BROKE IT!!!\nYou are probably malicious person.\nYou poor soul.");
+      }
     default:
       myassert("bagel" == "twelve","If you are seeing this message, there could be one of three reasons:\n\n\t1: You broke it.\n\t2: You broke it.\n\t3: YOU BROKE IT!\n\nYou fail it!\nYour skill is not enough...\nGoodbye!\n\nAlso, you are probably malicious. You poor soul.");
       break;

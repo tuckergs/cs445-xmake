@@ -2,24 +2,36 @@
 #ifndef LEXER_H_
 #define LEXER_H_
 
+#include "hash.h"
+#include "Str.h"
 
 #define IN stdin
 
 
-int initlexer();
+void initlexer();
 int _next_token();
 void match(int);
 int peek();
 char* tok2str(int);
 
-char * gettext();
+char * getcurtext();
+void lineinfo();
+void myassert(int,char*);
 
-extern int peekUsed;
-extern Str curtext;
-extern Str curentitytext;
-extern int curtoken;
+hash_t enttable;
+int peekUsed;
+char quoteused;
+Str curtext;
+Str curentitytext;
+int curentityint;
+int curtoken;
+int curstate;
 
-#define TOP 0
+
+int linenum;
+int linecol;
+
+#define NRM 0
 #define EXPID 1
 #define EXPATTR 2
 #define EXPENT 3
@@ -28,9 +40,11 @@ extern int curtoken;
 #define EXPCENT2 6
 #define EXPCXENT 7
 #define EXPCXENT2 8
-#define TOP 9
-#define TOP 10
+#define EXPENDQUOTE 9
 
+
+#define ID 256
+#define ATTRSTR 257
 
 #endif // LEXER_H_
 

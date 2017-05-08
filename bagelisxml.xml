@@ -1,0 +1,46 @@
+<root>
+
+  <target name="all">
+
+    <target name="main.o">
+      <dependency name="main.c"/>
+      <command do="gcc -g -c main.c"/>
+    </target>
+
+
+    <target name="lexer.o">
+      <dependency name="lexer.c"/>
+      <command do="gcc -g -c lexer.c"/>
+    </target>
+
+    
+    <target name="helper.o">
+      <dependency name="helper.c"/>
+      <command do="gcc -g -c helper.c"/>
+    </target>
+
+
+    <target name="hash.o">
+      <dependency name="hash.c"/>
+      <command do="gcc -g -c hash.c"/>
+    </target>
+
+
+    <target name="hashpjw.o">
+      <dependency name="hashpjw.c"/>
+      <command do="gcc -g -c hashpjw.c"/>
+    </target>
+
+
+    <target name="Str.o">
+      <dependency name="Str.c"/>
+      <command do="gcc -g -c Str.c"/>
+    </target>
+
+
+    <command do="gcc -g main.o lexer.o helper.o hash.o hashpjw.o Str.o"/>
+    <command do="./bagel &lt; twelve.p"/>
+
+  </target>
+
+</root>

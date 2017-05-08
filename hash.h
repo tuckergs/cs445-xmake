@@ -29,7 +29,7 @@ typedef struct node_s node_t;
 node_t * new_node();
 hash_t new_hash();
 node_t * insert_node(node_t**,char*,char);
-node_t * hash_insert(hash_t*,char*);
+node_t * hash_insert(hash_t*,char*,char);
 node_t * hash_search(hash_t*,char*);
 
 

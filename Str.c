@@ -6,7 +6,7 @@
 
 
 
-Str Str_init ( int st )
+Str Str_init ()
 {
 
 	Str v;
@@ -19,6 +19,12 @@ Str Str_init ( int st )
 
 }
 
+Str Str_clear(Str s)
+{
+  if(s.str)
+    free(s.str);
+  return Str_init();
+}
 
 Str append ( Str l , char x )
 {

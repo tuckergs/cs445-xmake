@@ -21,7 +21,7 @@ typedef struct Str Str;
 Str append ( Str v , char x );
 
 Str Str_init();
-
+Str Str_clear(Str);
 
 
 #endif //STR_H_

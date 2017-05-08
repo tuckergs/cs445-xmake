@@ -2,7 +2,6 @@
 #include <string.h>
 #include "hash.h"
 
-extern nodetable_t ntable;
 
 
 node_t * new_node()
