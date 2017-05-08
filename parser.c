@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "lexer.h"
+#include "parser.h"
+#include <string.h>
 
 //peek(): check next token without match it
 
@@ -88,7 +90,7 @@ void childswithend(){
     match('<');
     childswithend2();
   }else{
-    match(TEXTSTR);
+    //match(TEXTSTR);
     childswithend();
   }
 }
