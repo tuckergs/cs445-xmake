@@ -21,7 +21,6 @@ attributes: ID attribute2 attributes
 attribute2: '=' '\"' ATTRSTR '\"'
 
 childswithend: '<' childswithend2
-  | TEXTSTR childswithend
 
 childswithend2: ID tagelement3 childswithend
   | endtag2
