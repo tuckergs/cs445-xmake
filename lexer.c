@@ -42,13 +42,14 @@ void match(int tok)
   else
     ctoken = _next_token();
 
-  peekUsed = 0;
+  myassert(ctoken == tok,"Free syntax error");
+  
+  if(tok < 256)
+    fprintf(stderr,"{\'%c\'}",(char)tok);
+  else
+    fprintf(stderr,"{%s: %s}",tok2str(tok),getcurtext());
 
-  if(ctoken != tok)
-  {
-    fprintf(stderr,"You broke it!\nYou created a syntax error!\nExpected: %s\nReceived: %s\n\n",tok2str(tok),tok2str(curtoken));
-    assert(0);
-  }
+  peekUsed = 0;
 }
 
 int peek()
@@ -58,7 +59,8 @@ int peek()
   else
   {
     peekUsed = 1;
-    return _next_token();
+    curtoken = _next_token();
+    return curtoken;
   }
 }
 

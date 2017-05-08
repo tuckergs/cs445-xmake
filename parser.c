@@ -27,7 +27,7 @@ void document2(){
   if(peek()=='?'){
     match('?');
     match(ID);
-    myassert(!strcmp(getcurtext,"xml"),"Expected \"xml\"");
+    myassert(!strcmp(getcurtext(),"xml"),"Expected \"xml\"");
     attributes();
     match('?');
     match('>');
