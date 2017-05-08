@@ -1,0 +1,27 @@
+Rules
+-As in real XML, you msut have a root node. Note that no work will be done with this node. For example, it cannot be treated as a target.
+-No text nodes. We did not implement those
+-Begin tags, end tags, begin-end tags, and attributes are implemented.
+-Also, the specification is implemented, but we don't do anything with it
+
+
+Tags and what they do
+
+<target>
+-A XMakefile target. It can be used to organize other elements, or it can be the job you select from the command line
+-Must not be self-closing
+-Attributes
+--name: An identifier for this target. Used for the selection from the command line
+--file: If this is present, it changes the behaviour of XMake.
+---If the file referenced by the file attribute exists and this is not the job selected, it skips the commands in the target.
+
+<dependency>
+-A file dependency. The program exits if the files specified don't exist
+-Attributes
+--file: A file that we check to see if it exists
+
+<command>
+-A command to execute, like gcc, ggc, or lex/yacc. Note that you don't need lex/yacc to compile the source code for XMake
+-Attributes
+--do: The command to execute. Please execute only one. If you don't comply, we will force the compiler to fail, and Tino will beat you at chess, and you will be sad.
+
