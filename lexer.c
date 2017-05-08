@@ -42,6 +42,8 @@ void match(int tok)
   else
     ctoken = _next_token();
 
+  peekUsed = 0;
+
   if(ctoken != tok)
   {
     fprintf(stderr,"You broke it!\nYou created a syntax error!\nExpected: %s\nReceived: %s\n\n",tok2str(tok),tok2str(curtoken));
