@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <assert.h>
+#include <string.h>
 #include "lexer.h"
 #include "parser.h"
-#include <string.h>
+#include "Stack.h"
 
 //peek(): check next token without match it
-
-
-
+int check_file=0;
 
 //document: '<' document2
 void document(){
@@ -44,6 +44,12 @@ void document2(){
 */
 void attributes(){
   if(peek()==ID){
+    //deal with dependency
+    char* s=getcurtext();
+    if (strcmp(s,"dependency")==0) {
+      check_file = 1;
+    }
+
     match(ID);
     attribute2();
     attributes();
@@ -55,6 +61,15 @@ void attributes(){
 void attribute2(){
   match('=');
   match('\"');
+
+  if (check_file) {
+    char* fname = getcurtext();
+    if (access(fname, F_OK) == -1){
+      printf("%s ", fname);
+      myassert( 1==2, "is not exists");
+    }
+  }
+
   match(ATTRSTR);
   match('\"');
 }
