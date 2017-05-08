@@ -8,8 +8,8 @@
 
 #include "Stack.h"
 #include <stdlib.h>
+#include <string.h>
 
-extern char *strdup(const char *s);
 
 
 void init(struct Stack *stack){

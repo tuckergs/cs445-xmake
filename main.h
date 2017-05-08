@@ -6,8 +6,11 @@ int main();
 
 void execstack();
 
-Stack tarstack;
-Stack cmdstack;
+struct Stack tarstack;
+struct Stack revcmdstack;
+struct Stack cmdstack;
+
+char* targetname;
 
 
 
