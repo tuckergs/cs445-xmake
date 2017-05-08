@@ -39,7 +39,6 @@
 
 
     <command do="gcc -g main.o lexer.o helper.o hash.o hashpjw.o Str.o"/>
-    <command do="./bagel &lt; twelve.p"/>
 
   </target>
 

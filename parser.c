@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "lexer.h"
 
 //peek(): check next token without match it
 
-void match(int token){
-  assert( peek() == token );
-}
 
 
 
@@ -26,9 +24,8 @@ void document(){
 void document2(){
   if(peek()=='?'){
     match('?');
-    match('x');
-    match('m');
-    match('l');
+    match(ID);
+    myassert(!strcmp(getcurtext,"xml"),"Expected \"xml\"");
     attributes();
     match('?');
     match('>');
@@ -41,7 +38,8 @@ void document2(){
 
 
 /* attributes: ID attribute2 attributes
-   | /* empty */
+   |  empty
+*/
 void attributes(){
   if(peek()==ID){
     match(ID);
