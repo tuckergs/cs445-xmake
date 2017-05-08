@@ -31,10 +31,11 @@ int main(int argc, char** argv)
   revstacks();
 
   //print cmds
-  print_stack(cmdstack);
+  //print_stack(cmdstack);
 
   //Execute commands
-  //execstack();
+  printf("\n");
+  execstack();
 
 }
 
@@ -50,6 +51,13 @@ void execstack()
 {
   while(!isempty(cmdstack))
   {
-    system(pop(&cmdstack));
+    char path[1035];
+    char* cmd = pop(&cmdstack);
+    FILE * fp = popen(cmd, "r");
+    while (fgets(path, sizeof(path)-1, fp) != NULL) {
+      printf("%s", path);
+    }
+    pclose(fp);
+
   }
 }
