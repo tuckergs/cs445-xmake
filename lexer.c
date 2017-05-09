@@ -112,7 +112,7 @@ int _next_token()
 
   while(1)
   {
-    c = getc(stdin);
+    c = getc(xmakefp);
     linecol++;
     if(c == '\n')
     {
@@ -154,7 +154,7 @@ int _next_token()
       }
       else
       {
-        ungetc(c,stdin);
+        ungetc(c,xmakefp);
         curstate = NRM;
         return ID;
       }
@@ -163,7 +163,7 @@ int _next_token()
       myassert(c != '<',"\'<\' can't be used in quotes! Escape it using &lt;");
       if(c == quoteused)
       {
-        ungetc(c,stdin);
+        ungetc(c,xmakefp);
         curstate = EXPENDQUOTE;
         return ATTRSTR;
       }

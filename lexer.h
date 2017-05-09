@@ -5,7 +5,6 @@
 #include "hash.h"
 #include "Str.h"
 
-#define IN stdin
 
 
 void initlexer();
@@ -27,6 +26,7 @@ int curentityint;
 int curtoken;
 int curstate;
 
+FILE* xmakefp;
 
 int linenum;
 int linecol;
