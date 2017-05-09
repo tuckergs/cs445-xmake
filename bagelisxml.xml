@@ -13,7 +13,7 @@
       <command do="gcc -g -c lexer.c"/>
     </target>
 
-    
+
     <target name="helper.o">
       <dependency name="helper.c"/>
       <command do="gcc -g -c helper.c"/>

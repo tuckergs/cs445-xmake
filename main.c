@@ -1,8 +1,9 @@
 
 #include "main.h"
 
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Stack.h"
 #include "lexer.h"
 #include "parser.h"
@@ -16,10 +17,12 @@ int main(int argc, char** argv)
 {
 
   //Set target name
-  if(argc == 1)
-    targetname = "all";
-  else if(argc == 2)
-    targetname = argv[1];
+  if (argc==1) {
+    targetname="all";
+  }
+  else if (argc==2) {
+    targetname=argv[1];
+  }
   else
   {
     fprintf(stderr,"Must have zero or one arguments\n");
@@ -43,7 +46,11 @@ int main(int argc, char** argv)
   //Put commands in an executable order
   revstacks();
 
+  //print cmds
+  //print_stack(cmdstack);
+
   //Execute commands
+  printf("\n");
   execstack();
 
 }
@@ -60,6 +67,13 @@ void execstack()
 {
   while(!isempty(cmdstack))
   {
-    system(pop(&cmdstack));
+    char path[1035];
+    char* cmd = pop(&cmdstack);
+    FILE * fp = popen(cmd, "r");
+    while (fgets(path, sizeof(path)-1, fp) != NULL) {
+      printf("%s", path);
+    }
+    pclose(fp);
+
   }
 }

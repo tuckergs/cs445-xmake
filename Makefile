@@ -1,5 +1,5 @@
-all: lexer.o main.o helper.o hash.o hashpjw.o Str.o parser.o
-	gcc -g lexer.o main.o helper.o hash.o hashpjw.o Str.o  parser.o -o xmake
+all: lexer.o Stack.o main.o helper.o hash.o hashpjw.o Str.o parser.o
+	gcc -g lexer.o Stack.o main.o helper.o hash.o hashpjw.o Str.o parser.o -o xmake
 
 parser.o: parser.c
 	gcc -g -c parser.c
@@ -21,6 +21,9 @@ hashpjw.o: hashpjw.c
 
 Str.o: Str.c
 	gcc -g -c Str.c
+
+Stack.o: Stack.c
+	gcc -g -c Stack.c
 
 clean:
 	rm -f *.o
