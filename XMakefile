@@ -6,7 +6,11 @@
       <dependency name="main.c"/>
       <command do="gcc -g -c main.c"/>
     </target>
-
+    
+    <target name="parser.o">
+      <dependency name="parser.c"/>
+      <command do="gcc -g -c parser.c"/>
+    </target>
 
     <target name="lexer.o">
       <dependency name="lexer.c"/>
@@ -38,7 +42,13 @@
     </target>
 
 
-    <command do="gcc -g main.o lexer.o helper.o hash.o hashpjw.o Str.o"/>
+    <target name="Stack.o">
+      <dependency name="Stack.c"/>
+      <command do="gcc -g -c Stack.c"/>
+    </target>
+
+
+    <command do="gcc -g main.o lexer.o helper.o hash.o hashpjw.o Str.o parser.o Stack.o -o xmake4"/>
 
   </target>
 

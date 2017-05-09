@@ -21,6 +21,8 @@ extern int curstate;
 extern int linenum;
 extern int linecol;
 
+extern FILE* xmakefp;
+
 void initlexer()
 {
   peekUsed = 0;

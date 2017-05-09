@@ -2,6 +2,8 @@
 #ifndef LEXER_H_
 #define LEXER_H_
 
+#include <stdio.h>
+
 #include "hash.h"
 #include "Str.h"
 
