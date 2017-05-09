@@ -5,7 +5,7 @@
 #include <string.h>
 #include "lexer.h"
 #include "parser.h"
-
+#include "Stack.h"
 
 int main(int argc, char** argv)
 {
@@ -53,6 +53,7 @@ void execstack()
   {
     char path[1035];
     char* cmd = pop(&cmdstack);
+    fprintf(stderr,"%s\n",cmd);
     FILE * fp = popen(cmd, "r");
     while (fgets(path, sizeof(path)-1, fp) != NULL) {
       printf("%s", path);
