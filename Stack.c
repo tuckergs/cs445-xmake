@@ -54,6 +54,7 @@ void print_top(struct Stack stack){
 
 void print_stack(struct Stack stack){
     if (isempty(stack)) return;
+    printf("\n");
     for (int i=stack.size-1; i>=0; --i) {
         printf("%s\n",stack.array[i]);
     }

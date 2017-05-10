@@ -21,7 +21,8 @@ int main(int argc, char** argv)
     targetname="all";
   }
   else if (argc==2) {
-    targetname=argv[1];
+    targetname=strdup(argv[1]);
+    printf("\ntarget name: %s\n",targetname);
   }
   else
   {

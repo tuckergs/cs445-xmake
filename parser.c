@@ -12,6 +12,7 @@
 int check_file = 0;
 int push_cmd = 0;
 int push_tar = 0;
+int check_tar_name = 0;
 extern char* targetname;
 extern struct Stack tarstack,revcmdstack;
 
@@ -65,18 +66,20 @@ void attribute2(){
   match(ATTRSTR);
 
   char* s = getcurtext();
-  //printf("\n%s\n",s);
   if (check_file) {
     if (access(s, F_OK) == -1){
       printf("\n%s\n",s);
       myassert( 0, "file not exists");
     }
   }
-  else if (push_cmd && (strcmp(s,targetname)==0 || strcmp("all",targetname)==0)) {
-    push(&revcmdstack,s);
-  }else if (push_tar){
-    push(&tarstack,s);
+  else if (strcmp(s,targetname)==0 || strcmp("all",targetname)==0) {
+    //printf("\n%s\n", s);
+    check_tar_name = 1;
   }
+
+  if (push_cmd) push(&revcmdstack,s);
+  if (push_tar) push(&tarstack,s);
+
 
   match('\"');
 }
@@ -127,7 +130,7 @@ void childswithend2(){
       check_file = 1;
     }
     else if (strcmp(s,"command")==0) {
-      push_cmd = 1;
+      if (check_tar_name) push_cmd = 1;
     }
     else if (strcmp(s,"target")==0){
       push_tar = 1;
@@ -150,8 +153,8 @@ void endtag2(){
   //printf("\n%s\n",s);
 
   if (strcmp(s,"target")==0) {
-    pop(&tarstack);
-    push_tar = 0;
+    //print_stack(tarstack);
+    if (strcmp(pop(&tarstack),targetname) == 0) check_tar_name = 0;
   }
 
   match('>');
@@ -170,7 +173,7 @@ void tagelement3(){
 //tagelement4: '/' '>'
 //  | '>' childswithend
 void tagelement4(){
-
+  push_tar = 0;
   if(peek()=='/'){
     match('/');
     match('>');

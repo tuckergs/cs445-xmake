@@ -6,7 +6,7 @@
       <dependency name="main.c"/>
       <command do="gcc -g -c main.c"/>
     </target>
-    
+
     <target name="parser.o">
       <dependency name="parser.c"/>
       <command do="gcc -g -c parser.c"/>
